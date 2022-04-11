@@ -9,6 +9,7 @@ public class GameData : MonoBehaviour
     public Vector2[,] gridOfSurface;
     public int cellSurfaceX;
     public int cellSurfaceY;
+    public PlayerParams.pParam playerParams;
     public struct eData
     {
        public List<GameObject> environObjects;

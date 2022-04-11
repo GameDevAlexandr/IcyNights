@@ -278,7 +278,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 126502084}
-  m_LocalRotation: {x: 0.43627512, y: -0.08411519, z: 0.041005664, w: 0.8949342}
+  m_LocalRotation: {x: 0.43627515, y: -0.08411514, z: 0.041005637, w: 0.8949342}
   m_LocalPosition: {x: 348.9, y: 8.5, z: 113.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -386,6 +386,7 @@ GameObject:
   - component: {fileID: 524720406}
   - component: {fileID: 524720405}
   - component: {fileID: 524720408}
+  - component: {fileID: 524720409}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -522,6 +523,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b99d8b05fd3c4e4dbf509c5c10d0313, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &524720409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 524720400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03db017255435764fb31ea9c58bd0338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerParams:
+    health: 10
+    speedRegeneration: 0
+    stamina: 0
+    staminaRegeneration: 0
+    speedMovment: 0
+    hunger: 0
+    hungerEffect: 0
+    thirst: 0
+    thirstEffect: 0
+    bodyTemper: 0
+    bodyTemperRegeneration: 0
+    tired: 0
+    tiredEffect: 0
+    capacity: 0
+    capacityEffect: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,7 +815,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.43627512, y: -0.08411519, z: 0.041005664, w: 0.8949342}
+  m_LocalRotation: {x: 0.43627515, y: -0.08411514, z: 0.041005637, w: 0.8949342}
   m_LocalPosition: {x: 348.9, y: 8.5, z: 113.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -858,6 +887,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellSurfaceX: 30
   cellSurfaceY: 30
+  playerParams:
+    health: 0
+    speedRegeneration: 0
+    stamina: 0
+    staminaRegeneration: 0
+    speedMovment: 0
+    hunger: 0
+    hungerEffect: 0
+    thirst: 0
+    thirstEffect: 0
+    bodyTemper: 0
+    bodyTemperRegeneration: 0
+    tired: 0
+    tiredEffect: 0
+    capacity: 0
+    capacityEffect: 0
 --- !u!4 &1141592828
 Transform:
   m_ObjectHideFlags: 0
