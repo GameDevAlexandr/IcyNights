@@ -30,7 +30,7 @@ public class MovmentPlayer : MonoBehaviour
         }
         if (directionX != 0 || directionY != 0)
         {
-            _rb.velocity = new Vector3(directionX * currentSpeed, 0, directionY * currentSpeed);
+            _rb.velocity = new Vector3(directionX * currentSpeed, _rb.velocity.y, directionY * currentSpeed);
             if (!isRun)
             {
                 animator.SetBool("Walk", true);

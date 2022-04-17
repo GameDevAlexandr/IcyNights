@@ -5,58 +5,34 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    [HideInInspector] public Item curentItem;
-    [SerializeField] float volumeInventory;
-    [SerializeField] GameObject inventCell;
-    [SerializeField] Image inventPanel;
-    public struct ItemCell
-    {
-       public GameObject itemObject;
-       public Item Item;
-       public InventoryCell iCell; 
-    }
-    public static List<ItemCell> itemCells = new List<ItemCell>();
+    [SerializeField] float MaxVolumeInventory;
+    public static List<Item> itemsInInventory = new List<Item>();
+    public static float filledVolume;
     private void Awake()
     {
-        Control.pickItemEvent.AddListener(PickItem);
+  
     }
-    private void PickItem()
+    public static void PickItem()
     {
-        GeneralUi.characterPanel.SetActive(true);
-        GameObject ItemInInventory = new GameObject();
-        ItemInInventory.Equals(curentItem.gameObject);
-        Player.IsItemPicked = false;
-        GeneralUi.hint.SetActive(false);
-        Destroy(curentItem.gameObject);
-        if (itemCells.Count == 0)
+        Item currentItem = new Item();
+        currentItem.nameItem = ContctEnvironment.Item.nameItem;
+        currentItem.count = ContctEnvironment.Item.count;
+        currentItem.icon = ContctEnvironment.Item.icon;
+        for (int i = 0; i < itemsInInventory.Count; i++)
         {
-            CreateInventoryCell();
-        }
-        else
-        {
-            for (int i = 0; i < itemCells.Count; i++)
+            if(itemsInInventory[i].nameItem == currentItem.nameItem)
             {
-                if (itemCells[i].Item.nameItem == curentItem.nameItem)
-                {
-                    itemCells[i].Item.count += curentItem.count;
-                    itemCells[i].iCell.PickElementToCell(i);
-                    GeneralUi.characterPanel.SetActive(false);
-                    return;
-                }
+                itemsInInventory[i].count += currentItem.count;
+                GeneralUi.PutItemToInventory(i);
+                goto over;
             }
-            CreateInventoryCell();
         }
-        GeneralUi.characterPanel.SetActive(false);
-    }
-    private void CreateInventoryCell()
-    {
-        GameObject newInventCell = GameObject.Instantiate(inventCell, inventPanel.transform);
-        ItemCell iCell = new ItemCell();
-        iCell.itemObject = curentItem.gameObject;
-        iCell.Item = curentItem;
-        iCell.iCell = newInventCell.GetComponent<InventoryCell>();
-        itemCells.Add(iCell);
-        iCell.iCell.PickElementToCell(itemCells.Count-1);
-        
+        itemsInInventory.Add(currentItem);
+        GeneralUi.PutItemToInventory(itemsInInventory.Count - 1);
+
+    over:
+        ContctEnvironment.IsItemPicked = false;
+        GeneralUi.hint.SetActive(false);
+        Destroy(ContctEnvironment.Item.gameObject);    
     }
 }

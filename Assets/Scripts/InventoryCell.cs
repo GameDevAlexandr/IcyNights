@@ -7,33 +7,41 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))] 
 public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IDropHandler
 {
-    private Text itemCount;
     private Button itemButton;
     private RectTransform rectTransform;
     private RectTransform startTransform;
     private Image charPanel;
-    private int itemIndex;
-    private Item item;
     private Transform startParent;
+    [HideInInspector] public Item item;
+    [HideInInspector] public int indexInInventory;
+    [HideInInspector] public Text itemCount;
     private void Awake()
     {
+       
+    }
+    private void OnEnable()
+    {
+        charPanel = GameObject.Find("CharacterPanel").GetComponent<Image>();
         itemButton = GetComponent<Button>();
         itemCount = GetComponentInChildren<Text>();
         rectTransform = GetComponent<RectTransform>();
         startTransform = new RectTransform();
         startTransform.Equals(rectTransform);
     }
-    private void OnEnable()
+    public void ClickItemButton()
     {
-        charPanel = GameObject.Find("CharacterPanel").GetComponent<Image>();
-        
+        GeneralUi.itemStaticPanel.SetActive(true);
+        GeneralUi.imageStaticIcon.sprite = item.icon;
+        GeneralUi.selectedItem = item;
+        GeneralUi.selectedItemIndex = indexInInventory;
     }
-    public void PickElementToCell(int index)
+    public void PutElementToCell(Item thisItem)
     {
-        itemIndex = index;
-        item = Inventory.itemCells[index].Item;
-        itemCount.text = item.count.ToString();            
+        GeneralUi.characterPanel.SetActive(true);
+        item = thisItem;
         itemButton.image.sprite = item.icon;
+        itemCount.text = item.count.ToString();
+        GeneralUi.characterPanel.SetActive(false);
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -51,7 +59,6 @@ public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
     {
         rectTransform.anchoredPosition += eventData.delta;
     }
-
     public void OnDrop(PointerEventData eventData)
     {
         rectTransform = startTransform;

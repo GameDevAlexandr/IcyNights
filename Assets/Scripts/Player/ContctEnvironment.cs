@@ -5,31 +5,25 @@ using UnityEngine;
 [RequireComponent(typeof(Control))]
 public class ContctEnvironment : MonoBehaviour
 {
-    private Control control;
-    private Inventory inventory;
+    public static Item Item;
+    public static bool IsItemPicked;
 
-    private void Awake()
-    {
-        control = GetComponent<Control>();
-        inventory = GetComponent<Inventory>();
-    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Item")
         {
-            Player.IsItemPicked = true;
-            inventory.curentItem = other.GetComponent<Item>();
+            IsItemPicked = true;
+            Item = other.GetComponent<Item>();
             GeneralUi.hint.SetActive(true);
-            GeneralUi.hintText.text = inventory.curentItem.nameItem;
+            GeneralUi.hintText.text = Item.nameItem;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Item")
         {
-            Player.IsItemPicked = false;
+            IsItemPicked = false;
             GeneralUi.hint.SetActive(false);
         }
     }
-
 }

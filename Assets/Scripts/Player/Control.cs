@@ -30,10 +30,10 @@ public class Control : MonoBehaviour
             }
         }
         mp.PlayerMove(directX, directY, Input.GetKey(KeyCode.LeftShift));
-        if(Player.IsItemPicked && Input.GetKeyDown(KeyCode.E))
+        if(ContctEnvironment.IsItemPicked && Input.GetKeyDown(KeyCode.E))
         {
+            Inventory.PickItem();
             pickItemEvent.Invoke();
-            Debug.Log("pick");
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class BiomGeneration : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class BiomGeneration : MonoBehaviour
     public Vector2 sizeSurface;
     [SerializeField] private LayerMask surfaceLayer;
     [SerializeField] private float depth;
-    private List<GameObject> envirObjects = new List<GameObject>();
+    public List<GameObject> envirObjects = new List<GameObject>();
     private void Awake()
     {
       
@@ -35,12 +36,12 @@ public class BiomGeneration : MonoBehaviour
         {
             if (!Physics.CheckSphere(_hit.point, envirParams[elementIndex].noPutRadius, envirParams[elementIndex].ObjectLayer))
             {
-                GameObject newObject = Instantiate(envirParams[elementIndex].envirObject, _hit.point, Quaternion.identity);
+                GameObject newObject = Instantiate(envirParams[elementIndex].envirObject, _hit.point, Quaternion.identity, transform);
                 newObject.transform.Rotate(Vector3.down, Random.Range(0, 360));
                 newObject.transform.localScale *= Random.Range(envirParams[elementIndex].scaleVariaton.x, 
-                    envirParams[elementIndex].scaleVariaton.y);
+                envirParams[elementIndex].scaleVariaton.y);
                 envirObjects.Add(newObject);
-                AddObjectToCell(newObject);
+                //AddObjectToCell(newObject);
                // newObject.SetActive(false);
             }
         }      

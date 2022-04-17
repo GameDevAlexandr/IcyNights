@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnerBiom : MonoBehaviour
 {
     [SerializeField] Collider surfaceCollider;
+    private List<GameObject> biomOjects = new List<GameObject>();
     
     [System.Serializable]
     public struct biomParam
@@ -15,16 +16,17 @@ public class SpawnerBiom : MonoBehaviour
     [SerializeField] private int cellsCountX;
     [SerializeField] private int cellsCountY;
     [SerializeField] biomParam[] bioms;
-    [SerializeField] GameObject testObject;
-    private void Awake()
+    private List<GameObject> environmentObjects;
+    public void Generate()
     {
+        ClearEnvironment();
         Vector3 rightTop;
         Vector3 leftDown;
         Vector3 size;
         rightTop = surfaceCollider.bounds.max;
         leftDown = surfaceCollider.bounds.min;
         size = surfaceCollider.bounds.size;
-        GameData.DataSingleton.CreateGrid(leftDown, size);
+        //GameData.DataSingleton.CreateGrid(leftDown, size);
         for (int i = 0; i < bioms.Length; i++)
         {
             for (int j = 0; j < bioms[i].biomCount; j++)
@@ -33,20 +35,20 @@ public class SpawnerBiom : MonoBehaviour
                 Random.Range(leftDown.z, rightTop.z));
                 GameObject newBiom = Instantiate(bioms[i].biom.gameObject, biomPosition, Quaternion.identity);
                 newBiom.GetComponent<BiomGeneration>().GenerateEnviron();
+                biomOjects.Add(newBiom);
             }
 
         }
     }
-    private void Test()
+    public void ClearEnvironment()
     {
-        
-        for (int i = 0; i < 30; i++)
+        if (biomOjects.Count != 0)
         {
-            for (int j = 0; j < 30; j++)
+            for (int i = 0; i < biomOjects.Count; i++)
             {
-                GameObject to = Instantiate(testObject, new Vector3(GameData.DataSingleton.gridOfSurface[i, j].x, transform.position.y, GameData.DataSingleton.gridOfSurface[i, j].y), Quaternion.identity);
-                to.name = "xNumber" + i.ToString() + "--Ynumber" + j.ToString();
+                DestroyImmediate(biomOjects[i], true);
             }
+            biomOjects.Clear();
         }
     }
 }
