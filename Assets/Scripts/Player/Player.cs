@@ -5,21 +5,30 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
+    public static UnityEvent changeParametrEvent = new UnityEvent();
     public static PlayerParams.pParam CurrentParams;
     public static bool IsItemPicked;
     public static Transform playerPosition;
-    [SerializeField] private  PlayerParams.pParam maxPlayerParams;    
+    public static float debafStamina;
+    public static float debafHealth;
+    public static float debafTired;
+    [SerializeField] private  PlayerParams.pParam maxPlayerParams;
     private float changeTimer;
+    private float hungerPower;
+    private float temperPower;
+    private float tiredPower;
+    private float thirstPower;
+    private float startSpeed;
     private void Start()
     {
         CurrentParams = maxPlayerParams;
         changeTimer = Time.time;
         GeneralUi.dropItemEvent.AddListener(DropItem);
-
+        startSpeed = CurrentParams.speedMovment;
     }
     private void Update()
     {
-       if(Time.time - changeTimer > 1)
+       if(Time.time - changeTimer > 0.5f)
         {
             ChangeParam();
             changeTimer = Time.time;
@@ -27,17 +36,76 @@ public class Player : MonoBehaviour
     }
     private void ChangeParam()
     {
-        if (CurrentParams.health < maxPlayerParams.health)
+        CurrentParams.speedMovment = startSpeed - CurrentParams.capacity * 0.012f;
+        checkDebafs(CurrentParams.bodyTemper, ref temperPower);
+        checkDebafs(CurrentParams.hunger, ref hungerPower);
+        checkDebafs(CurrentParams.thirst, ref thirstPower);
+        checkDebafs(CurrentParams.tired, ref tiredPower);
+        float dHealth = 0;
+        debafHealth = 0;
+        if (temperPower > 0 || tiredPower > 0)
         {
-            CurrentParams.health += CurrentParams.healthRegeneration;
+            debafHealth = CurrentParams.healthRegeneration;
+            if (temperPower == 0.2f)
+            {
+                dHealth += 0.5f;
+            }
+            if (tiredPower == 0.2f)
+            {
+                dHealth += 0.5f;
+            }
+            debafHealth += dHealth;
         }
-        if(CurrentParams.stamina < maxPlayerParams.stamina)
+        else
         {
-            CurrentParams.stamina += CurrentParams.staminaRegeneration;
+            debafHealth = 0;
         }
-        if(CurrentParams.hunger<maxPlayerParams.hunger)
+        debafTired = temperPower + thirstPower + hungerPower;
+        debafStamina = (hungerPower + thirstPower + tiredPower)*100;
+        ChangerParametres(ref CurrentParams.health,  CurrentParams.healthRegeneration,debafHealth,0);
+        ChangerParametres(ref CurrentParams.tired,  CurrentParams.tiredEffect, debafTired,0);
+        ChangerParametres(ref CurrentParams.stamina,  CurrentParams.staminaRegeneration,0, debafStamina);
+        ChangerParametres(ref CurrentParams.hunger,  CurrentParams.hungerEffect,0,0);
+        ChangerParametres(ref CurrentParams.thirst,  CurrentParams.thirstEffect,0,0);
+        ChangerParametres(ref CurrentParams.bodyTemper,  CurrentParams.bodyTemperRegeneration,0,0);
+        changeParametrEvent.Invoke();
+        
+    }
+    private void ChangerParametres( ref float parametr, float changeValue, float debaf, float staminaDebaf)
+    {
+        changeValue *= 0.5f;
+        debaf *= 0.5f;
+        float maxParam = 100 - staminaDebaf;
+        if (maxParam < parametr)
         {
-            CurrentParams.hunger += CurrentParams.hungerEffect;
+            parametr = maxParam;
+        }
+        if(parametr>=0 && parametr <= maxParam)
+        {
+            if(parametr + changeValue > maxParam)
+            {
+                changeValue = maxParam - parametr;
+            }
+            if (parametr + changeValue < 0)
+            {
+                changeValue = parametr;
+            }
+            parametr += changeValue - debaf;
+        }        
+    }
+    private void checkDebafs(float parametr, ref float parametrPower)
+    {
+        if (parametr <= 60)
+        {
+            parametrPower = 0.1f;
+        }
+        if (parametr<=30 )
+        {
+            parametrPower = 0.2f;
+        }
+        if (parametr > 60)
+        {
+            parametrPower = 0f;
         }
     }
     private void DropItem(Item item)
@@ -61,8 +129,10 @@ public class Player : MonoBehaviour
                     }
                  
                 }
+                CurrentParams.capacity -= curItem.weight;
                 break;
             }
         }
+        
     }
 }

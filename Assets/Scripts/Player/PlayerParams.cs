@@ -30,6 +30,6 @@ public static class PlayerParams
         public float tiredEffect;
         [Header("Параметры грузоподъемности")]
         public float capacity;
-        public float capacityEffect;
+        public float maxCapacity;
     }
 }

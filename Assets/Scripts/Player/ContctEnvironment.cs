@@ -12,11 +12,20 @@ public class ContctEnvironment : MonoBehaviour
     {
         if(other.tag == "Item")
         {
-            IsItemPicked = true;
             Item = other.GetComponent<Item>();
             GeneralUi.hint.SetActive(true);
-            GeneralUi.hintText.text = Item.nameItem;
+
+            if (Player.CurrentParams.capacity + Item.weight > Player.CurrentParams.maxCapacity)
+            {
+                GeneralUi.hintText.text = "Слишком тяжело";
+            }
+            else
+            {
+                IsItemPicked = true;
+                GeneralUi.hintText.text = Item.nameItem;
+            }
         }
+            
     }
     private void OnTriggerExit(Collider other)
     {

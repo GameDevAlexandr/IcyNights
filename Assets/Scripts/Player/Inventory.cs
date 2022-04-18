@@ -33,6 +33,7 @@ public class Inventory : MonoBehaviour
     over:
         ContctEnvironment.IsItemPicked = false;
         GeneralUi.hint.SetActive(false);
+        Player.CurrentParams.capacity += ContctEnvironment.Item.weight;
         Destroy(ContctEnvironment.Item.gameObject);    
     }
 }

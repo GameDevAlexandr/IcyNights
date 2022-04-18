@@ -22,6 +22,9 @@ public class GeneralUi : MonoBehaviour
     [SerializeField] private GameObject itemCellPrefab;
     [SerializeField] private GameObject itemPanel;
     [SerializeField] private Image imageIcon;
+    [Header("Healt, Vigor, Stamina, Hunger, Thirst, Temper")]
+    [SerializeField] private Image[] parametrIndicators = new Image[6];
+    [SerializeField] private Text capacityText;
     private static List<InventoryCell> inventoryCells = new List<InventoryCell>();
     private static GameObject itemCell;
  
@@ -36,6 +39,7 @@ public class GeneralUi : MonoBehaviour
         itemCell = itemCellPrefab;
         itemStaticPanel = itemPanel;
         imageStaticIcon = imageIcon;
+        Player.changeParametrEvent.AddListener(SetIndicatorsValue);
     }
     public static void PutItemToInventory(int index)
     {
@@ -67,6 +71,16 @@ public class GeneralUi : MonoBehaviour
             Inventory.itemsInInventory.RemoveAt(selectedItemIndex);
             itemPanel.SetActive(false);
         }
+    }
+    private void SetIndicatorsValue()
+    {
+        parametrIndicators[0].fillAmount = Player.CurrentParams.health/100;
+        parametrIndicators[1].fillAmount = Player.CurrentParams.tired/100;
+        parametrIndicators[2].fillAmount = Player.CurrentParams.stamina/100;
+        parametrIndicators[3].fillAmount = Player.CurrentParams.hunger/100;
+        parametrIndicators[4].fillAmount = Player.CurrentParams.thirst/100;
+        parametrIndicators[5].fillAmount = Player.CurrentParams.bodyTemper/100;
+        capacityText.text = Player.CurrentParams.capacity.ToString();
     }
 
 }
