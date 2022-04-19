@@ -16,8 +16,8 @@ public class Steps : MonoBehaviour
     }
     private void Update()
     {
-        float rotation = transform.eulerAngles.y;
-        step.startRotation = (270 + rotation) / 55.55f;
+        float rotation = playerTransform.eulerAngles.y;
+        step.startRotation = (90 + rotation) / 55.55f;
         if (ground.position.y-transform.position.y > 0 && !isStep)
         {
             step.Play();

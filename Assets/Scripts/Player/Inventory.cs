@@ -15,9 +15,10 @@ public class Inventory : MonoBehaviour
     public static void PickItem()
     {
         Item currentItem = new Item();
-        currentItem.nameItem = ContctEnvironment.Item.nameItem;
-        currentItem.count = ContctEnvironment.Item.count;
-        currentItem.icon = ContctEnvironment.Item.icon;
+        currentItem = ContctEnvironment.item;
+        //currentItem.nameItem = ContctEnvironment.item.nameItem;
+        //currentItem.count = ContctEnvironment.item.count;
+        //currentItem.icon = ContctEnvironment.item.icon;
         for (int i = 0; i < itemsInInventory.Count; i++)
         {
             if(itemsInInventory[i].nameItem == currentItem.nameItem)
@@ -33,7 +34,7 @@ public class Inventory : MonoBehaviour
     over:
         ContctEnvironment.IsItemPicked = false;
         GeneralUi.hint.SetActive(false);
-        Player.CurrentParams.capacity += ContctEnvironment.Item.weight;
-        Destroy(ContctEnvironment.Item.gameObject);    
+        Player.CurrentParams.capacity += ContctEnvironment.item.weight;
+        Destroy(ContctEnvironment.item.gameObject);    
     }
 }
