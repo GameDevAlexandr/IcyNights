@@ -15,6 +15,7 @@ public class SpawnerBiom : MonoBehaviour
     }
     [SerializeField] private int cellsCountX;
     [SerializeField] private int cellsCountY;
+    [SerializeField] private Transform _level;
     [SerializeField] biomParam[] bioms;
     private List<GameObject> environmentObjects;
     public void Generate()
@@ -33,7 +34,7 @@ public class SpawnerBiom : MonoBehaviour
             {
                 Vector3 biomPosition = new Vector3(Random.Range(leftDown.x, rightTop.x), transform.position.y,
                 Random.Range(leftDown.z, rightTop.z));
-                GameObject newBiom = Instantiate(bioms[i].biom.gameObject, biomPosition, Quaternion.identity);
+                GameObject newBiom = Instantiate(bioms[i].biom.gameObject, biomPosition, Quaternion.identity, _level);
                 newBiom.GetComponent<BiomGeneration>().GenerateEnviron();
                 biomOjects.Add(newBiom);
             }
