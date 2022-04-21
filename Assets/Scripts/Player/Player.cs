@@ -135,4 +135,14 @@ public class Player : MonoBehaviour
         }
         
     }
+    public static void AddParamCount(string nameParam, int count)
+    {
+        switch (nameParam)
+        {
+            case "health": CurrentParams.health += count;
+                break;
+            case "temper": CurrentParams.bodyTemper += count;
+                break;
+        }
+    }
 }
