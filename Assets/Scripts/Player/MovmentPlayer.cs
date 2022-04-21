@@ -60,8 +60,15 @@ public class MovmentPlayer : MonoBehaviour
             animator.SetBool("Run", false);
         }
     }
-    public void PickUp() 
+    public void PickUp(Item.Type type) 
     {
-        animator.SetTrigger("Pick");
+        if (type == Item.Type.picup)
+        {
+            animator.SetTrigger("Pick");
+        }
+        if(type == Item.Type.interaction)
+        {
+            
+        }
     }
 }

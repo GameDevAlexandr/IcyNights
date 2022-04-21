@@ -27,7 +27,10 @@ public class ContctEnvironment : MonoBehaviour
         }
         if(other.tag == "Interection")
         {
-
+            item = other.GetComponent<Item>();
+            GeneralUi.hint.SetActive(true);
+            GeneralUi.hintText.text = item.nameItem;
+            IsItemPicked = true;
         }
             
     }

@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public static float debafStamina;
     public static float debafHealth;
     public static float debafTired;
+    public static Fire selectedFire;
     [SerializeField] private  PlayerParams.pParam maxPlayerParams;
     private float changeTimer;
     private float hungerPower;
@@ -135,7 +136,7 @@ public class Player : MonoBehaviour
         }
         
     }
-    public static void AddParamCount(string nameParam, int count)
+    public static void AddParamCount(string nameParam, float count)
     {
         switch (nameParam)
         {

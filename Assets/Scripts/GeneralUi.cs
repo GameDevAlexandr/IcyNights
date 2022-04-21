@@ -15,6 +15,8 @@ public class GeneralUi : MonoBehaviour
     public static Item selectedItem;
     public static UnityEvent<Item> dropItemEvent = new UnityEvent<Item>();
     public static int selectedItemIndex;
+    public static Image interPanel;
+    public static Button useInterButton;
 
     [SerializeField] private GameObject charPanel;
     [SerializeField] private GameObject hintPanel;
@@ -25,6 +27,8 @@ public class GeneralUi : MonoBehaviour
     [Header("Healt, Vigor, Stamina, Hunger, Thirst, Temper")]
     [SerializeField] private Image[] parametrIndicators = new Image[6];
     [SerializeField] private Text capacityText;
+    [SerializeField] private Image intiractionPanel;
+    [SerializeField] private Button useInteractionButton;
     private static List<InventoryCell> inventoryCells = new List<InventoryCell>();
     private static GameObject itemCell;
  
@@ -56,13 +60,16 @@ public class GeneralUi : MonoBehaviour
             inventoryCells[index].PutElementToCell(Inventory.itemsInInventory[index]);
         }
     }
-    public void DropItem()
+    public void DropItem( bool droped)
     {
         if(Inventory.itemsInInventory[selectedItemIndex].count > 0)
         {
             Inventory.itemsInInventory[selectedItemIndex].count--;
             inventoryCells[selectedItemIndex].itemCount.text = Inventory.itemsInInventory[selectedItemIndex].count.ToString();
-            dropItemEvent.Invoke(selectedItem); //Player listner
+            if (droped)
+            {
+                dropItemEvent.Invoke(selectedItem); //Player listner
+            }
         }
         if (Inventory.itemsInInventory[selectedItemIndex].count == 0)
         {
@@ -82,5 +89,11 @@ public class GeneralUi : MonoBehaviour
         parametrIndicators[5].fillAmount = Player.CurrentParams.bodyTemper/100;
         capacityText.text = Player.CurrentParams.capacity.ToString();
     }
+    public static void ActivateInteractionPanel(bool isActive)
+    {
+        interPanel.gameObject.SetActive(isActive);
+        useInterButton.image.sprite = ContctEnvironment.item.icon;
+    }
+
 
 }

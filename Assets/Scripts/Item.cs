@@ -6,7 +6,7 @@ public class Item : MonoBehaviour
 {
     public enum  Type
     {
-        горючее, воспламенитель, розжиг
+        picup, interaction
     }
     [Header("Тип предмета")]
     public Type type;

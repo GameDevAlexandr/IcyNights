@@ -6,7 +6,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(MovmentPlayer))]
 public class Control : MonoBehaviour
 {
-    public static UnityEvent pickItemEvent = new UnityEvent();
+    public static UnityEvent<Item.Type> pickItemEvent = new UnityEvent<Item.Type>();
     private MovmentPlayer mp;
     private float directX;
     private float directY;
@@ -33,7 +33,7 @@ public class Control : MonoBehaviour
         if(ContctEnvironment.IsItemPicked && Input.GetKeyDown(KeyCode.E))
         {
             Inventory.PickItem();
-            pickItemEvent.Invoke();
+            pickItemEvent.Invoke(ContctEnvironment.item.type);
         }
     }
 }
