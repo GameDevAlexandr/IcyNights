@@ -8,10 +8,8 @@ public class Weather : MonoBehaviour
     [SerializeField] private GameObject _snowstorm;
     [SerializeField] private GameObject _supersnowstorm;
     [SerializeField] private int _choseWeater;
-    [SerializeField] private GameObject _sun;
-    [SerializeField] private float _timeDay;
-    float maxBR = 1;
-    public float curBR;
+    private float timerChoseWeather = 300f;
+ 
 
     [Header("Sounds")]
     [SerializeField] private AudioSource _snowstormSound;
@@ -21,19 +19,19 @@ public class Weather : MonoBehaviour
 
     private void Awake()
     {
-        _sun = GameObject.Find("Directional Light");
-         curBR = _sun.GetComponent<Light>().intensity;
+      _targetPosition =  GameObject.Find("Player").transform;
     }
 
-    private void Start()
-    {
-        curBR = maxBR;
-    }
     private void Update()
     {
-        _timeDay -= Time.deltaTime;
-        curBR = CalculatorHealt();
+        
+        timerChoseWeather -= Time.deltaTime;
 
+        if(timerChoseWeather <= 0)
+        {
+            timerChoseWeather = 300f;
+            ChoseWeather(Random.Range(0, 4));
+        }
         _cloudPosition.transform.position = new Vector3(_targetPosition.transform.position.x, _targetPosition.transform.position.y + 10f, _targetPosition.transform.position.z);
         switch (_choseWeater)
         {
@@ -62,8 +60,7 @@ public class Weather : MonoBehaviour
                 _supersnowstorm.SetActive(false);
                 dependWeather = 0;
                 break;
-        }
-     
+        }    
     }
 
     public  void  ChoseWeather(int weather)
@@ -71,9 +68,5 @@ public class Weather : MonoBehaviour
         _choseWeater = weather;
     }
 
-    float CalculatorHealt()
-    {
-        return curBR / maxBR;
-    }
 
 }
