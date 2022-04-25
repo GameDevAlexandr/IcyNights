@@ -32,7 +32,6 @@ public class Control : MonoBehaviour
         mp.PlayerMove(directX, directY, Input.GetKey(KeyCode.LeftShift));
         if(ContctEnvironment.IsItemPicked && Input.GetKeyDown(KeyCode.E))
         {
-            Inventory.PickItem();
             pickItemEvent.Invoke(ContctEnvironment.item.type);
         }
     }

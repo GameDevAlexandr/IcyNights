@@ -10,18 +10,19 @@ public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
     private Button itemButton;
     private RectTransform rectTransform;
     private RectTransform startTransform;
-    private Image charPanel;
     private Transform startParent;
-    [HideInInspector] public Item item;
+    [HideInInspector] public Item item { get { return _item; } set { _item = value; PutElementToCell(); }}
     [HideInInspector] public int indexInInventory;
     [HideInInspector] public Text itemCount;
+    [HideInInspector] public bool usible = false;
+    [HideInInspector] public int strenght;
+    private Item _item;
     private void Awake()
     {
-       
+        Inventory.changeItemCountEvent.AddListener(changeItemCount);
     }
     private void OnEnable()
     {
-        charPanel = GameObject.Find("CharacterPanel").GetComponent<Image>();
         itemButton = GetComponent<Button>();
         itemCount = GetComponentInChildren<Text>();
         rectTransform = GetComponent<RectTransform>();
@@ -30,24 +31,46 @@ public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
     }
     public void ClickItemButton()
     {
-        GeneralUi.itemStaticPanel.SetActive(true);
-        GeneralUi.imageStaticIcon.sprite = item.icon;
-        GeneralUi.selectedItem = item;
-        GeneralUi.selectedItemIndex = indexInInventory;
+        if (!usible)
+        {
+            GeneralUi.itemStaticPanel.SetActive(true);
+            GeneralUi.imageStaticIcon.sprite = item.icon;
+            GeneralUi.selectedItem = item;
+            GeneralUi.selectedItemIndex = indexInInventory;
+        }
+        else
+        {
+            ContctEnvironment.item.GetComponent<Fire>().fireHelath += strenght;
+            Inventory.AddItemToinvenotry(indexInInventory, -1);
+        }
     }
-    public void PutElementToCell(Item thisItem)
+    public void PutElementToCell()
     {
         GeneralUi.characterPanel.SetActive(true);
-        item = thisItem;
-        itemButton.image.sprite = item.icon;
-        itemCount.text = item.count.ToString();
+        itemButton.image.sprite = _item.icon;
+        itemCount.text = _item.count.ToString();
         GeneralUi.characterPanel.SetActive(false);
+    }
+    private void changeItemCount()
+    {
+        if (Inventory.itemsInInventory[indexInInventory].count > 0)
+        {
+            itemCount.text = Inventory.itemsInInventory[indexInInventory].count.ToString();
+        }
+        else
+        {
+            if (Inventory.itemsInInventory[indexInInventory])
+            {
+                Inventory.itemsInInventory.RemoveAt(indexInInventory);
+            }
+            //indexInInventory = Inventory.itemsInInventory.Count;
+            Destroy(gameObject);
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         startParent = transform.parent;
-        transform.parent = charPanel.transform;
     }
 
     public void OnBeginDrag(PointerEventData eventData)

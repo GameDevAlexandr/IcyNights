@@ -22,4 +22,21 @@ public class Item : MonoBehaviour
     public float volume;
     [Header("»конка")]
     public Sprite icon;
+
+    private Outline outline;
+    private void Awake()
+    {
+       outline = GetComponent<Outline>(); 
+    }
+    //private void Update()
+    //{
+    //    if(Mathf.Abs(Vector3.Distance(transform.position, Player.playerPosition.position)) < 3)
+    //    {
+    //        outline.enabled = true;
+    //    }
+    //    else
+    //    {
+    //        outline.enabled = false;
+    //    }
+    //}
 }

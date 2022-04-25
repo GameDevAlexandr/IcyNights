@@ -20,6 +20,7 @@ public class SpawnerBiom : MonoBehaviour
     public void Generate()
     {
         ClearEnvironment();
+        GameObject bufer = new GameObject("Bioms");
         Vector3 rightTop;
         Vector3 leftDown;
         Vector3 size;
@@ -34,6 +35,7 @@ public class SpawnerBiom : MonoBehaviour
                 Vector3 biomPosition = new Vector3(Random.Range(leftDown.x, rightTop.x), transform.position.y,
                 Random.Range(leftDown.z, rightTop.z));
                 GameObject newBiom = Instantiate(bioms[i].biom.gameObject, biomPosition, Quaternion.identity);
+                newBiom.transform.parent = bufer.transform;
                 newBiom.GetComponent<BiomGeneration>().GenerateEnviron();
                 biomOjects.Add(newBiom);
             }
@@ -42,13 +44,15 @@ public class SpawnerBiom : MonoBehaviour
     }
     public void ClearEnvironment()
     {
-        if (biomOjects.Count != 0)
-        {
-            for (int i = 0; i < biomOjects.Count; i++)
-            {
-                DestroyImmediate(biomOjects[i], true);
-            }
-            biomOjects.Clear();
-        }
+        biomOjects.Clear();
+        DestroyImmediate(GameObject.Find("Bioms"));
+        //if (biomOjects.Count != 0)
+        //{
+        //    for (int i = 0; i < biomOjects.Count; i++)
+        //    {
+        //        DestroyImmediate(biomOjects[i], true);
+        //    }
+        //    biomOjects.Clear();
+        //}
     }
 }

@@ -15,8 +15,8 @@ public class GeneralUi : MonoBehaviour
     public static Item selectedItem;
     public static UnityEvent<Item> dropItemEvent = new UnityEvent<Item>();
     public static int selectedItemIndex;
-    public static Image interPanel;
-    public static Button useInterButton;
+    public static IntiractionPanel interPanel;
+    //public static Button useInterButton;
 
     [SerializeField] private GameObject charPanel;
     [SerializeField] private GameObject hintPanel;
@@ -27,9 +27,8 @@ public class GeneralUi : MonoBehaviour
     [Header("Healt, Vigor, Stamina, Hunger, Thirst, Temper")]
     [SerializeField] private Image[] parametrIndicators = new Image[6];
     [SerializeField] private Text capacityText;
-    [SerializeField] private Image intiractionPanel;
-    [SerializeField] private Button useInteractionButton;
-    private static List<InventoryCell> inventoryCells = new List<InventoryCell>();
+    [SerializeField] private IntiractionPanel intiractionPanel;
+    //private static List<InventoryCell> inventoryCells = new List<InventoryCell>();
     private static GameObject itemCell;
  
     private void Awake()
@@ -43,40 +42,28 @@ public class GeneralUi : MonoBehaviour
         itemCell = itemCellPrefab;
         itemStaticPanel = itemPanel;
         imageStaticIcon = imageIcon;
+        interPanel = intiractionPanel;
         Player.changeParametrEvent.AddListener(SetIndicatorsValue);
     }
     public static void PutItemToInventory(int index)
     {
-        if (index > inventoryCells.Count - 1)
-        {
             GameObject newCell = Instantiate(itemCell, inventoryPanel.transform);
             InventoryCell inventoryCell = newCell.GetComponent<InventoryCell>();
-            inventoryCell.PutElementToCell(Inventory.itemsInInventory[index]);
-            inventoryCell.indexInInventory = inventoryCells.Count;
-            inventoryCells.Add(inventoryCell);
-        }
-        else
-        {
-            inventoryCells[index].PutElementToCell(Inventory.itemsInInventory[index]);
-        }
+            inventoryCell.item = Inventory.itemsInInventory[index];
     }
-    public void DropItem( bool droped)
+    public static void DropItem( bool droped)
     {
-        if(Inventory.itemsInInventory[selectedItemIndex].count > 0)
+        if (Inventory.itemsInInventory[selectedItemIndex].count == 1)
         {
-            Inventory.itemsInInventory[selectedItemIndex].count--;
-            inventoryCells[selectedItemIndex].itemCount.text = Inventory.itemsInInventory[selectedItemIndex].count.ToString();
+            itemStaticPanel.SetActive(false);
+        }
+        if (Inventory.itemsInInventory[selectedItemIndex].count > 0)
+        {
+            Inventory.AddItemToinvenotry(selectedItemIndex,-1);
             if (droped)
             {
                 dropItemEvent.Invoke(selectedItem); //Player listner
             }
-        }
-        if (Inventory.itemsInInventory[selectedItemIndex].count == 0)
-        {
-            Destroy(inventoryCells[selectedItemIndex].gameObject);
-            inventoryCells.RemoveAt(selectedItemIndex);
-            Inventory.itemsInInventory.RemoveAt(selectedItemIndex);
-            itemPanel.SetActive(false);
         }
     }
     private void SetIndicatorsValue()
@@ -89,10 +76,38 @@ public class GeneralUi : MonoBehaviour
         parametrIndicators[5].fillAmount = Player.CurrentParams.bodyTemper/100;
         capacityText.text = Player.CurrentParams.capacity.ToString();
     }
-    public static void ActivateInteractionPanel(bool isActive)
+    public static void ActivateInteractionPanel(bool isActive, Item item)
     {
         interPanel.gameObject.SetActive(isActive);
-        useInterButton.image.sprite = ContctEnvironment.item.icon;
+        Fire fire;
+        if(fire = item.GetComponent<Fire>())
+        {
+            interPanel.icon.texture = fire.fireTextwre;
+            for (int i = 0; i < fire.fuels.Length; i++)
+            {
+                for (int j = 0; j < Inventory.itemsInInventory.Count; j++)
+                {
+                    if (fire.fuels[i].item.nameItem == Inventory.itemsInInventory[j].nameItem && 
+                        !interPanel.ChecContent(Inventory.itemsInInventory[j])&& Inventory.itemsInInventory[j].count>0)
+                    {
+                        GameObject newCell = Instantiate(itemCell, interPanel.content.transform);
+                        InventoryCell iCell = newCell.GetComponent<InventoryCell>();
+                        interPanel.inventoryCells.Add(iCell);
+                        iCell.item = Inventory.itemsInInventory[j];
+                        iCell.strenght = fire.fuels[i].fireHealthAdded;
+                        iCell.indexInInventory = j;
+                        iCell.usible = true;
+                    }
+                }
+            }
+            if (fire.currentLevel == 0)
+            {
+                for (int i = 0; i < fire.upgradeItems_L2.Length; i++)
+                {
+
+                }
+            }
+        }
     }
 
 

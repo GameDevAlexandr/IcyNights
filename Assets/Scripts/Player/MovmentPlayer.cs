@@ -66,9 +66,5 @@ public class MovmentPlayer : MonoBehaviour
         {
             animator.SetTrigger("Pick");
         }
-        if(type == Item.Type.interaction)
-        {
-            
-        }
     }
 }

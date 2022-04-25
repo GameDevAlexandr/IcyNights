@@ -1,40 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] float MaxVolumeInventory;
+    public static UnityEvent changeItemCountEvent = new UnityEvent();
     public static List<Item> itemsInInventory = new List<Item>();
     public static float filledVolume;
+
     private void Awake()
     {
-  
+        Control.pickItemEvent.AddListener(PickItem);
     }
-    public static void PickItem()
+    private void PickItem(Item.Type type)
     {
-        Item currentItem = new Item();
-        currentItem = ContctEnvironment.item;
-        //currentItem.nameItem = ContctEnvironment.item.nameItem;
-        //currentItem.count = ContctEnvironment.item.count;
-        //currentItem.icon = ContctEnvironment.item.icon;
-        for (int i = 0; i < itemsInInventory.Count; i++)
+        if (type == Item.Type.picup)
         {
-            if(itemsInInventory[i].nameItem == currentItem.nameItem)
+            Item currentItem = new Item();
+            currentItem = ContctEnvironment.item;
+            for (int i = 0; i < itemsInInventory.Count; i++)
             {
-                itemsInInventory[i].count += currentItem.count;
-                GeneralUi.PutItemToInventory(i);
-                goto over;
+                if (itemsInInventory[i].nameItem == currentItem.nameItem)
+                {
+                    AddItemToinvenotry(i, currentItem.count);
+                    goto over;
+                }
             }
+            itemsInInventory.Add(currentItem);
+            GeneralUi.PutItemToInventory(itemsInInventory.Count - 1);
+            Player.CurrentParams.capacity += currentItem.weight * currentItem.count;
+        over:
+            ContctEnvironment.IsItemPicked = false;
+            GeneralUi.hint.SetActive(false);
+            Destroy(ContctEnvironment.item.gameObject);
         }
-        itemsInInventory.Add(currentItem);
-        GeneralUi.PutItemToInventory(itemsInInventory.Count - 1);
-
-    over:
-        ContctEnvironment.IsItemPicked = false;
-        GeneralUi.hint.SetActive(false);
-        Player.CurrentParams.capacity += ContctEnvironment.item.weight;
-        Destroy(ContctEnvironment.item.gameObject);    
+        else
+        {
+            GeneralUi.ActivateInteractionPanel(true, ContctEnvironment.item);
+        }
+    }
+    public static void AddItemToinvenotry(int inventoryIndex, int count)
+    {
+        Player.CurrentParams.capacity += itemsInInventory[inventoryIndex].weight * count;
+        itemsInInventory[inventoryIndex].count += count;
+        changeItemCountEvent.Invoke();
+        
     }
 }

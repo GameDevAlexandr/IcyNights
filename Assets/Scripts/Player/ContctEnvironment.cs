@@ -36,10 +36,11 @@ public class ContctEnvironment : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Item")
+        if (other.tag == "Item"|| other.tag == "Interection")
         {
             IsItemPicked = false;
             GeneralUi.hint.SetActive(false);
+            GeneralUi.interPanel.gameObject.SetActive(false);
         }
     }
 }

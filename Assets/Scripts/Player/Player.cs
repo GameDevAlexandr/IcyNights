@@ -130,7 +130,6 @@ public class Player : MonoBehaviour
                     }
                  
                 }
-                CurrentParams.capacity -= curItem.weight;
                 break;
             }
         }
@@ -141,9 +140,11 @@ public class Player : MonoBehaviour
         switch (nameParam)
         {
             case "health": CurrentParams.health += count;
+
                 break;
             case "temper": CurrentParams.bodyTemper += count;
                 break;
+
         }
     }
 }
