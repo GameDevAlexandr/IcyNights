@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7813866334832717368}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 241.12112, y: 0.20872545, z: 127.10283}
+  m_LocalPosition: {x: 234.96176, y: 1.389074, z: 144.65855}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children:
   - {fileID: 7270231606116929689}
@@ -64,7 +64,7 @@ MonoBehaviour:
   count: 1
   weight: 2
   volume: 1
-  icon: {fileID: 21300000, guid: f264f1be3ca5cb84fa927bf0882dc3fd, type: 3}
+  icon: {fileID: 21300000, guid: ec3727d8c77c7684aa46b2da2c43b7e9, type: 3}
 --- !u!135 &8122340706870734130
 SphereCollider:
   m_ObjectHideFlags: 0

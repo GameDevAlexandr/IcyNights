@@ -10,7 +10,6 @@ public class DayCycle : MonoBehaviour
     [SerializeField] private Light _sun;
     [SerializeField] private AnimationCurve SunCurve;
     private float sunIntesivity;
-    public float TimeDayPublic;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,16 +26,5 @@ public class DayCycle : MonoBehaviour
         }
         _sun.transform.localRotation = Quaternion.Euler(_timeOfDay * 360f, 180, 0);
         _sun.intensity = sunIntesivity * SunCurve.Evaluate(_timeOfDay);
-
     }
-    
-
-    public float TimeDay()
-    {
-        TimeDayPublic = _timeOfDay;
-        return TimeDayPublic;
-    }
-
-
-
 }

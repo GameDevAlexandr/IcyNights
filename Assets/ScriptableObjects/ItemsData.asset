@@ -14,4 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Items:
   - {fileID: 6580495121110955110, guid: 4e5c204f691305f449d544889707831a, type: 3}
-  crafts: []
+  - {fileID: 6580495121110955110, guid: 1b6ba52e253c8484f87d8bb3964cd861, type: 3}
+  crafts:
+  - itemComponents:
+    - itemComponent: {fileID: 6580495121110955110, guid: 4e5c204f691305f449d544889707831a, type: 3}
+      count: 5
+    result: {fileID: 1916389483597131901, guid: a46b4ee785e661246bc8e48374cbfeca, type: 3}
+    enableToStart: 1

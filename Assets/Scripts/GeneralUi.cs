@@ -16,6 +16,8 @@ public class GeneralUi : MonoBehaviour
     public static UnityEvent<Item> dropItemEvent = new UnityEvent<Item>();
     public static int selectedItemIndex;
     public static IntiractionPanel interPanel;
+    public static Craft craftPanel;
+    public static GameObject itemCell;
     //public static Button useInterButton;
 
     [SerializeField] private GameObject charPanel;
@@ -28,8 +30,9 @@ public class GeneralUi : MonoBehaviour
     [SerializeField] private Image[] parametrIndicators = new Image[6];
     [SerializeField] private Text capacityText;
     [SerializeField] private IntiractionPanel intiractionPanel;
+    [SerializeField] private Craft _craftPanel;
     //private static List<InventoryCell> inventoryCells = new List<InventoryCell>();
-    private static GameObject itemCell;
+    
  
     private void Awake()
     {
@@ -43,13 +46,15 @@ public class GeneralUi : MonoBehaviour
         itemStaticPanel = itemPanel;
         imageStaticIcon = imageIcon;
         interPanel = intiractionPanel;
+        craftPanel = _craftPanel;
         Player.changeParametrEvent.AddListener(SetIndicatorsValue);
     }
     public static void PutItemToInventory(int index)
     {
-            GameObject newCell = Instantiate(itemCell, inventoryPanel.transform);
-            InventoryCell inventoryCell = newCell.GetComponent<InventoryCell>();
-            inventoryCell.item = Inventory.itemsInInventory[index];
+        GameObject newCell = Instantiate(itemCell, inventoryPanel.transform);
+        InventoryCell inventoryCell = newCell.GetComponent<InventoryCell>();
+        inventoryCell.indexInInventory = index;
+        inventoryCell.item = Inventory.itemsInInventory[index];
     }
     public static void DropItem( bool droped)
     {
@@ -96,19 +101,11 @@ public class GeneralUi : MonoBehaviour
                         iCell.item = Inventory.itemsInInventory[j];
                         iCell.strenght = fire.fuels[i].fireHealthAdded;
                         iCell.indexInInventory = j;
-                        iCell.usible = true;
+                        iCell.buttonType = InventoryCell.ButtonType.useble;
                     }
-                }
-            }
-            if (fire.currentLevel == 0)
-            {
-                for (int i = 0; i < fire.upgradeItems_L2.Length; i++)
-                {
-
                 }
             }
         }
     }
-
 
 }

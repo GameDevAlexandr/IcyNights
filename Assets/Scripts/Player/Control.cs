@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class Control : MonoBehaviour
 {
     public static UnityEvent<Item.Type> pickItemEvent = new UnityEvent<Item.Type>();
+    public static UnityEvent ActivateCharacterPanelEvent = new UnityEvent();
     private MovmentPlayer mp;
     private float directX;
     private float directY;
@@ -23,10 +24,12 @@ public class Control : MonoBehaviour
             if (GeneralUi.characterPanel.activeSelf) 
             {
                 GeneralUi.characterPanel.SetActive(false);
+                
             }
             else
             {
                 GeneralUi.characterPanel.SetActive(true);
+                ActivateCharacterPanelEvent.Invoke();
             }
         }
         mp.PlayerMove(directX, directY, Input.GetKey(KeyCode.LeftShift));

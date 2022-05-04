@@ -22,11 +22,6 @@ public class Weather : MonoBehaviour
       _targetPosition =  GameObject.Find("Player").transform;
     }
 
-    private void Start()
-    {
-        ChoseWeather(Random.Range(0, 4));
-    }
-
     private void Update()
     {
         

@@ -11,15 +11,24 @@ public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
     private RectTransform rectTransform;
     private RectTransform startTransform;
     private Transform startParent;
-    [HideInInspector] public Item item { get { return _item; } set { _item = value; PutElementToCell(); }}
-    [HideInInspector] public int indexInInventory;
+    [HideInInspector] public Item item { get { return _item; } set { _item = value; }}
+    [HideInInspector] public int indexInInventory = 999;
     [HideInInspector] public Text itemCount;
-    [HideInInspector] public bool usible = false;
+    //[HideInInspector] public bool usible = false;
     [HideInInspector] public int strenght;
+    [HideInInspector] public ButtonType buttonType;
+    [HideInInspector] public enum ButtonType 
+    {
+        invent,
+        useble,
+        craft
+    }
     private Item _item;
     private void Awake()
     {
         Inventory.changeItemCountEvent.AddListener(changeItemCount);
+        buttonType = ButtonType.invent;
+        Control.ActivateCharacterPanelEvent.AddListener(PutElementToCell);
     }
     private void OnEnable()
     {
@@ -28,43 +37,50 @@ public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
         rectTransform = GetComponent<RectTransform>();
         startTransform = new RectTransform();
         startTransform.Equals(rectTransform);
+        //PutElementToCell();
     }
     public void ClickItemButton()
     {
-        if (!usible)
+        if (buttonType == ButtonType.invent)
         {
             GeneralUi.itemStaticPanel.SetActive(true);
             GeneralUi.imageStaticIcon.sprite = item.icon;
             GeneralUi.selectedItem = item;
             GeneralUi.selectedItemIndex = indexInInventory;
         }
-        else
+        else if(buttonType == ButtonType.useble)
         {
             ContctEnvironment.item.GetComponent<Fire>().fireHelath += strenght;
             Inventory.AddItemToinvenotry(indexInInventory, -1);
         }
+        else
+        {
+            GeneralUi.craftPanel.craftedItem = _item;
+            GeneralUi.craftPanel.SetCraftedMaterial();
+        }
     }
     public void PutElementToCell()
     {
-        GeneralUi.characterPanel.SetActive(true);
-        itemButton.image.sprite = _item.icon;
-        itemCount.text = _item.count.ToString();
-        GeneralUi.characterPanel.SetActive(false);
-    }
-    private void changeItemCount()
-    {
-        if (Inventory.itemsInInventory[indexInInventory].count > 0)
+        Debug.Log(buttonType);
+        if (buttonType != ButtonType.craft)
         {
+            Debug.Log(Inventory.itemsInInventory[indexInInventory].count);
             itemCount.text = Inventory.itemsInInventory[indexInInventory].count.ToString();
         }
-        else
+        itemButton.image.sprite = _item.icon;
+    }
+    private void changeItemCount(bool IsDestroed, int index)
+    {
+        if (index == indexInInventory)
         {
-            if (Inventory.itemsInInventory[indexInInventory])
+            if (!IsDestroed)
             {
-                Inventory.itemsInInventory.RemoveAt(indexInInventory);
+                itemCount.text = Inventory.itemsInInventory[indexInInventory].count.ToString();
             }
-            //indexInInventory = Inventory.itemsInInventory.Count;
-            Destroy(gameObject);
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour
 {
     [SerializeField] float MaxVolumeInventory;
-    public static UnityEvent changeItemCountEvent = new UnityEvent();
+    public static UnityEvent<bool, int> changeItemCountEvent = new UnityEvent<bool, int>();
     public static List<Item> itemsInInventory = new List<Item>();
     public static float filledVolume;
 
@@ -44,9 +44,14 @@ public class Inventory : MonoBehaviour
     }
     public static void AddItemToinvenotry(int inventoryIndex, int count)
     {
+        bool isDestroed = false;
         Player.CurrentParams.capacity += itemsInInventory[inventoryIndex].weight * count;
         itemsInInventory[inventoryIndex].count += count;
-        changeItemCountEvent.Invoke();
-        
+        if (itemsInInventory[inventoryIndex].count == 0)
+        {
+            itemsInInventory.RemoveAt(inventoryIndex);
+            isDestroed = true;
+        }
+        changeItemCountEvent.Invoke(isDestroed,inventoryIndex);        
     }
 }

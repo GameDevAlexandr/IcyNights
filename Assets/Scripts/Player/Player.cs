@@ -111,29 +111,28 @@ public class Player : MonoBehaviour
     }
     private void DropItem(Item item)
     {
-        Item curItem;
+        GameObject newItem = new GameObject(); 
         for (int i = 0; i < GameData.DataSingleton.ItemsData.Items.Length; i++)
         {
-            if (GameData.DataSingleton.ItemsData.Items[i].nameItem == item.nameItem)
+            if(GameData.DataSingleton.ItemsData.Items[i].nameItem == item.nameItem)
             {
-                curItem = GameData.DataSingleton.ItemsData.Items[i];
-                GameObject newItem = Instantiate(curItem.gameObject);
-                for (int j = 0; j < 10; j++)
-                {
-                    Vector3 dropPosition = new Vector3(transform.position.x + Random.Range(-1.0f, 1.0f), transform.position.y, transform.position.z + Random.Range(-1.0f, 1.0f));
-                    Ray _ray = new Ray(dropPosition, Vector3.down);
-                    RaycastHit _hit;
-                    if (Physics.Raycast(_ray, out _hit, 3.0f, LayerMask.GetMask("Ground")))
-                    {
-                        newItem.transform.position = _hit.point;
-                        break;
-                    }
-                 
-                }
+                Destroy(newItem.gameObject);
+                newItem = Instantiate(GameData.DataSingleton.ItemsData.Items[i].gameObject);
                 break;
             }
         }
-        
+        for (int j = 0; j < 10; j++)
+        {
+            Vector3 dropPosition = new Vector3(transform.position.x + Random.Range(-1.0f, 1.0f), transform.position.y, transform.position.z + Random.Range(-1.0f, 1.0f));
+            Ray _ray = new Ray(dropPosition, Vector3.down);
+            RaycastHit _hit;
+            if (Physics.Raycast(_ray, out _hit, 3.0f, LayerMask.GetMask("Ground")))
+            {
+                newItem.transform.position = _hit.point;
+                break;
+            }
+        }
+
     }
     public static void AddParamCount(string nameParam, float count)
     {

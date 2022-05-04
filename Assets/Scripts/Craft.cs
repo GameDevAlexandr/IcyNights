@@ -1,13 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Craft : MonoBehaviour
 {
-    private ItemsData itemsData ;
+    [HideInInspector]public Item craftedItem;
+    public Transform content;
+    public Image[] needItemIcon;
+    public Text conditionText;
+    public Button craftButton;
+    private Text[] needItemsCount;
+    private ItemsData itemsData;
+    private List<int> needCount = new List<int>();
+    private List<Sprite> needIcon = new List<Sprite>();
+    private bool craftIsLoaded;
+
     private void Awake()
     {
-        itemsData = GameData.DataSingleton.ItemsData;
+        needItemsCount = new Text[needItemIcon.Length];
     }
     public bool isCrafting(Item item)
     {
@@ -15,33 +26,81 @@ public class Craft : MonoBehaviour
         int indexCraft = 0;
         for (int i = 0; i < itemsData.crafts.Length; i++)
         {
-            if(itemsData.crafts[i].result.nameItem == item.nameItem)
+            if (itemsData.crafts[i].result.nameItem == item.nameItem)
             {
                 indexCraft = i;
                 break;
             }
         }
-        if (CraftComplite) 
+        if (CraftComplite)
         {
             for (int i = 0; i < itemsData.crafts[indexCraft].itemComponents.Length; i++)
             {
                 ItemsData.Craft.ItemComponent itemComponent = itemsData.crafts[indexCraft].itemComponents[i];
-                for (int j = 0; j < Inventory.itemsInInventory.Count; j++)
+                needItemIcon[i].sprite = itemComponent.itemComponent.icon;
+                needItemsCount[i].text = itemComponent.count.ToString();
+                if (Inventory.itemsInInventory.Count > 0)
                 {
-                    Item checkItem = Inventory.itemsInInventory[j];
-                    if (checkItem.nameItem ==itemComponent.itemComponent.nameItem && checkItem.count >= itemComponent.count)
+                    for (int j = 0; j < Inventory.itemsInInventory.Count; j++)
                     {
-                        CraftComplite = true;
-                        break;
+                        Item checkItem = Inventory.itemsInInventory[j];
+                        if (checkItem.nameItem == itemComponent.itemComponent.nameItem)
+                        {
+                            Debug.Log("itemComponent.count");
+                            if (checkItem.count >= itemComponent.count)
+                            {
+                                CraftComplite = true;
+                                break;
+                            }
+                        }
+                        CraftComplite = false;
                     }
+                }
+                else
+                {
                     CraftComplite = false;
                 }
             }
         }
+        Debug.Log(CraftComplite);
         return CraftComplite;
     }
-    public void StartCraft()
+    public void SetCraftedMaterial()
     {
+        if (isCrafting(craftedItem))
+        {
+            craftButton.interactable = true;
+        }
+        else
+        {
+            craftButton.interactable = false;
+        }
+    }
+    private void OnEnable()
+    {
+        itemsData = GameData.DataSingleton.ItemsData;
+        for (int i = 0; i < needItemIcon.Length; i++)
+        {
+            needItemsCount[i] = needItemIcon[i].GetComponentInChildren<Text>();
+        }
+        if (!craftIsLoaded)
+        {
+            for (int i = 0; i < itemsData.crafts.Length; i++)
+            {
+                GameObject newObject = Instantiate(GeneralUi.itemCell, content);
+                InventoryCell cell = newObject.GetComponent<InventoryCell>();
+                cell.buttonType = InventoryCell.ButtonType.craft;
+                cell.item = itemsData.crafts[i].result;
+                cell.PutElementToCell();
+            }
+            craftIsLoaded = true;
+        }
+    }
+    public void StartCraftButtonClick()
+    {
+        if(craftedItem.type == Item.Type.picup)
+        {
 
+        }
     }
 }
