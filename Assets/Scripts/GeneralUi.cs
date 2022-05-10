@@ -58,6 +58,8 @@ public class GeneralUi : MonoBehaviour
     }
     public static void DropItem( bool droped)
     {
+        Debug.Log(Inventory.itemsInInventory.Count);
+        Debug.Log(selectedItemIndex);
         if (Inventory.itemsInInventory[selectedItemIndex].count == 1)
         {
             itemStaticPanel.SetActive(false);
@@ -70,6 +72,8 @@ public class GeneralUi : MonoBehaviour
                 dropItemEvent.Invoke(selectedItem); //Player listner
             }
         }
+        Debug.Log(Inventory.itemsInInventory.Count);
+        Debug.Log(selectedItemIndex);
     }
     private void SetIndicatorsValue()
     {
@@ -101,6 +105,7 @@ public class GeneralUi : MonoBehaviour
                         iCell.item = Inventory.itemsInInventory[j];
                         iCell.strenght = fire.fuels[i].fireHealthAdded;
                         iCell.indexInInventory = j;
+                        iCell.PutElementToCell();
                         iCell.buttonType = InventoryCell.ButtonType.useble;
                     }
                 }

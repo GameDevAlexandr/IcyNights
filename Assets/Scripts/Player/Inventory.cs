@@ -10,12 +10,13 @@ public class Inventory : MonoBehaviour
     public static UnityEvent<bool, int> changeItemCountEvent = new UnityEvent<bool, int>();
     public static List<Item> itemsInInventory = new List<Item>();
     public static float filledVolume;
+    private static bool noDestroy = false;
 
     private void Awake()
     {
         Control.pickItemEvent.AddListener(PickItem);
     }
-    private void PickItem(Item.Type type)
+    private static void PickItem(Item.Type type)
     {
         if (type == Item.Type.picup)
         {
@@ -35,7 +36,10 @@ public class Inventory : MonoBehaviour
         over:
             ContctEnvironment.IsItemPicked = false;
             GeneralUi.hint.SetActive(false);
-            Destroy(ContctEnvironment.item.gameObject);
+            if (!noDestroy)
+            {
+                Destroy(ContctEnvironment.item.gameObject);
+            }
         }
         else
         {
@@ -52,6 +56,23 @@ public class Inventory : MonoBehaviour
             itemsInInventory.RemoveAt(inventoryIndex);
             isDestroed = true;
         }
-        changeItemCountEvent.Invoke(isDestroed,inventoryIndex);        
+        changeItemCountEvent.Invoke(isDestroed,inventoryIndex);
+    }
+    public static void AddItemAfterCraft(Item item)
+    {
+        for( int i = 0; i < itemsInInventory.Count; i++)
+        {
+            if (item.nameItem == itemsInInventory[i].nameItem)
+            {
+                AddItemToinvenotry(i, 1);
+                break;
+            }
+            else if(i== itemsInInventory.Count - 1)
+            {
+                itemsInInventory.Add(item);
+                GeneralUi.PutItemToInventory(itemsInInventory.Count - 1);
+                Player.CurrentParams.capacity += item.weight;
+            }
+        }
     }
 }

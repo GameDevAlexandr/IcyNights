@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     private float tiredPower;
     private float thirstPower;
     private float startSpeed;
+    private List<Outline> outlines = new List<Outline>();
     private void Start()
     {
         CurrentParams = maxPlayerParams;
@@ -33,6 +34,16 @@ public class Player : MonoBehaviour
         {
             ChangeParam();
             changeTimer = Time.time;
+            RaycastHit _hit;
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 4);
+            foreach(Collider collider in colliders)
+            {
+                Item item;
+                if (item = collider.GetComponent<Item>())
+                {
+                    item.OnOutline();
+                }
+            }
         }
     }
     private void ChangeParam()

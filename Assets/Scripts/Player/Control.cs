@@ -15,7 +15,7 @@ public class Control : MonoBehaviour
     {
         mp = GetComponent<MovmentPlayer>();
     }
-    void Update()
+    void FixedUpdate()
     {
         directX = Input.GetAxisRaw("Horizontal");
         directY = Input.GetAxisRaw("Vertical");
@@ -33,9 +33,27 @@ public class Control : MonoBehaviour
             }
         }
         mp.PlayerMove(directX, directY, Input.GetKey(KeyCode.LeftShift));
-        if(ContctEnvironment.IsItemPicked && Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKey(KeyCode.E) && !ContctEnvironment.IsItemPicked)
+        {
+            mp.cameraPosition.RotateAroundLocal(Vector3.up, 0.1f);
+        }
+        if (Input.GetKey(KeyCode.Q))
+        {
+            mp.cameraPosition.RotateAroundLocal(Vector3.up, -0.1f);
+        }
+        if (ContctEnvironment.IsItemPicked && Input.GetKeyDown(KeyCode.E))
         {
             pickItemEvent.Invoke(ContctEnvironment.item.type);
         }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            mp.isTaked = !mp.isTaked;
+            mp.TakeWeapon();
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            mp.Attack();
+        }
+
     }
 }

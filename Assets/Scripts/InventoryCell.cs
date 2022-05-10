@@ -5,13 +5,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))] 
-public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IDropHandler
+public class InventoryCell : MonoBehaviour//IPointerDownHandler, IBeginDragHandler, IDragHandler, IDropHandler
 {
     private Button itemButton;
     private RectTransform rectTransform;
     private RectTransform startTransform;
     private Transform startParent;
-    [HideInInspector] public Item item { get { return _item; } set { _item = value; }}
+    [HideInInspector] public Item item;// { get { return _item; } set { _item = value; }}
     [HideInInspector] public int indexInInventory = 999;
     [HideInInspector] public Text itemCount;
     //[HideInInspector] public bool usible = false;
@@ -23,7 +23,6 @@ public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
         useble,
         craft
     }
-    private Item _item;
     private void Awake()
     {
         Inventory.changeItemCountEvent.AddListener(changeItemCount);
@@ -55,23 +54,21 @@ public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
         }
         else
         {
-            GeneralUi.craftPanel.craftedItem = _item;
+            GeneralUi.craftPanel.craftedItem = item;
             GeneralUi.craftPanel.SetCraftedMaterial();
         }
     }
     public void PutElementToCell()
     {
-        Debug.Log(buttonType);
         if (buttonType != ButtonType.craft)
         {
-            Debug.Log(Inventory.itemsInInventory[indexInInventory].count);
             itemCount.text = Inventory.itemsInInventory[indexInInventory].count.ToString();
         }
-        itemButton.image.sprite = _item.icon;
+        itemButton.image.sprite = item.icon;
     }
     private void changeItemCount(bool IsDestroed, int index)
     {
-        if (index == indexInInventory)
+        if (index == indexInInventory&&buttonType!=ButtonType.craft)
         {
             if (!IsDestroed)
             {
@@ -84,23 +81,23 @@ public class InventoryCell : MonoBehaviour, IPointerDownHandler, IBeginDragHandl
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        startParent = transform.parent;
-    }
+    //public void OnPointerDown(PointerEventData eventData)
+    //{
+    //    startParent = transform.parent;
+    //}
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
+    //public void OnBeginDrag(PointerEventData eventData)
+    //{
         
-    }
+    //}
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        rectTransform.anchoredPosition += eventData.delta;
-    }
-    public void OnDrop(PointerEventData eventData)
-    {
-        rectTransform = startTransform;
-        transform.parent = startParent;
-    }
+    //public void OnDrag(PointerEventData eventData)
+    //{
+    //    rectTransform.anchoredPosition += eventData.delta;
+    //}
+    //public void OnDrop(PointerEventData eventData)
+    //{
+    //    rectTransform = startTransform;
+    //    transform.parent = startParent;
+    //}
 }

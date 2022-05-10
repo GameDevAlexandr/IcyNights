@@ -12,9 +12,13 @@ public class Craft : MonoBehaviour
     public Button craftButton;
     private Text[] needItemsCount;
     private ItemsData itemsData;
-    private List<int> needCount = new List<int>();
-    private List<Sprite> needIcon = new List<Sprite>();
     private bool craftIsLoaded;
+    private List<Need> needs = new List<Need>();
+    public struct Need 
+    {
+        public int invenoryIndex;
+        public int count;
+    }
 
     private void Awake()
     {
@@ -22,6 +26,7 @@ public class Craft : MonoBehaviour
     }
     public bool isCrafting(Item item)
     {
+        needs.Clear();
         bool CraftComplite = true;
         int indexCraft = 0;
         for (int i = 0; i < itemsData.crafts.Length; i++)
@@ -39,6 +44,7 @@ public class Craft : MonoBehaviour
                 ItemsData.Craft.ItemComponent itemComponent = itemsData.crafts[indexCraft].itemComponents[i];
                 needItemIcon[i].sprite = itemComponent.itemComponent.icon;
                 needItemsCount[i].text = itemComponent.count.ToString();
+                
                 if (Inventory.itemsInInventory.Count > 0)
                 {
                     for (int j = 0; j < Inventory.itemsInInventory.Count; j++)
@@ -46,6 +52,10 @@ public class Craft : MonoBehaviour
                         Item checkItem = Inventory.itemsInInventory[j];
                         if (checkItem.nameItem == itemComponent.itemComponent.nameItem)
                         {
+                            Need need = new Need();
+                            need.count = itemComponent.count;
+                            need.invenoryIndex = j;
+                            needs.Add(need);
                             Debug.Log("itemComponent.count");
                             if (checkItem.count >= itemComponent.count)
                             {
@@ -98,9 +108,17 @@ public class Craft : MonoBehaviour
     }
     public void StartCraftButtonClick()
     {
-        if(craftedItem.type == Item.Type.picup)
+        Item item = new Item();
+        item = craftedItem;
+        for (int i = 0; i < needs.Count; i++)
         {
-
+            Inventory.AddItemToinvenotry(needs[i].invenoryIndex, -needs[i].count);
+            Debug.Log(needs[0].invenoryIndex + "  " + needs[0].count);
         }
+        if (craftedItem.type == Item.Type.picup)
+        {
+            Inventory.AddItemAfterCraft(item);
+        }
+        SetCraftedMaterial();
     }
 }

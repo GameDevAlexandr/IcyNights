@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\KrisDevelopment\EnviroSpawn_CS\Editor\EnviroSpawnEditor.cs" />
     <Compile Include="Assets\KrisDevelopment\SharedEditorToolUtilities\Editor\SETUtil_EditorCoroutine.cs" />
+    <Compile Include="Assets\Editor\AutoSave.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
