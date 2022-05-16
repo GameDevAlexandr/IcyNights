@@ -107,7 +107,7 @@ public class MovmentPlayer : MonoBehaviour
                 ContctEnvironment.item.transform.parent = heavyItemPosition;
                 ContctEnvironment.item.transform.position = heavyItemPosition.position;
                 carryHeavy = true;
-                GeneralUi.hintText.gameObject.SetActive(false);
+                GeneralUi.hint.SetActive(false);
             }
             else
             {

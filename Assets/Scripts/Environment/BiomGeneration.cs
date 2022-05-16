@@ -45,14 +45,6 @@ public class BiomGeneration : MonoBehaviour
             }
         }      
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ClearEnvironment();
-            GenerateEnviron();
-        }
-    }
     public void GenerateEnviron()
     {
         for (int i = 0; i < envirParams.Length; i++)

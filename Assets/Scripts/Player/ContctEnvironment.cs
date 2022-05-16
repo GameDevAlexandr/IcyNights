@@ -25,6 +25,10 @@ public class ContctEnvironment : MonoBehaviour
             IsItemPicked = true;
             GeneralUi.hintText.text = item.nameItem;
         }
+        if(other.tag == "Roof")
+        {
+            other.GetComponent<MeshRenderer>().enabled = false;
+        }
     }
     private void OnTriggerExit(Collider other)
     {
@@ -33,6 +37,10 @@ public class ContctEnvironment : MonoBehaviour
             IsItemPicked = false;
             GeneralUi.hint.SetActive(false);
             GeneralUi.interPanel.gameObject.SetActive(false);
+        }
+        if (other.tag == "Roof")
+        {
+            other.GetComponent<MeshRenderer>().enabled = true;
         }
     }
 }

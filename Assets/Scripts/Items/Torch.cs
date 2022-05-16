@@ -25,7 +25,7 @@ public class Torch : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Interection")
+        if(other.tag == "Item"&&other.GetComponent<Fire>())
         {
             isBurn = true;
         }

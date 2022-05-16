@@ -41,13 +41,13 @@ public class SpawnerBiom : MonoBehaviour
                AddObjectToCell(biomOjects[i].envirObjects[j]);
             }
         }
-        for (int i = 0; i < cellSurfaceX; i++)
-        {
-            for (int j= 0; j < cellSurfaceY; j++)
-            {
-                Debug.Log(environData[i, j].environObjects.Count);
-            }
-        }
+        //for (int i = 0; i < cellSurfaceX; i++)
+        //{
+        //    for (int j= 0; j < cellSurfaceY; j++)
+        //    {
+        //        Debug.Log(environData[i, j].environObjects.Count);
+        //    }
+        //}
         
         HideAll();
     }
@@ -101,6 +101,9 @@ public class SpawnerBiom : MonoBehaviour
     }
     public void CreateGrid()
     {
+        rightTop = surfaceCollider.bounds.max;
+        leftDown = surfaceCollider.bounds.min;
+        size = surfaceCollider.bounds.size;
         gridOfSurface = new Vector2[cellSurfaceX+1, cellSurfaceY+1];
         float XSizeCell;
         float YSizeCell;
@@ -114,6 +117,7 @@ public class SpawnerBiom : MonoBehaviour
                 environData[i, j].environObjects = new List<GameObject>();
                 //GameObject sh = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 //sh.transform.position = new Vector3(gridOfSurface[i, j].x, 0, gridOfSurface[i, j].y);
+                //sh.transform.localScale *= 5;
             }
         }
     }
