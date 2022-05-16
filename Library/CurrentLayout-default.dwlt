@@ -142,8 +142,8 @@ MonoBehaviour:
     y: 0
     width: 477
     height: 931
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -170,8 +170,8 @@ MonoBehaviour:
     y: 0
     width: 349
     height: 660
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -196,8 +196,8 @@ MonoBehaviour:
     y: 660
     width: 1427
     height: 271
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 24}
   m_Panes:
   - {fileID: 19}
@@ -347,8 +347,8 @@ MonoBehaviour:
     y: 0
     width: 1078
     height: 660
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 18}
@@ -582,22 +582,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Environment
+    - Assets/Scripts
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/Environment
+  - Assets/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Unity\NoTimeToDie
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 122}
-    m_SelectedIDs: d42b0f00
-    m_LastClickedID: 994260
-    m_ExpandedIDs: 00000000124d0000
+    m_SelectedIDs: 924d0000
+    m_LastClickedID: 19858
+    m_ExpandedIDs: 00000000124d0000924d000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -650,9 +650,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 8ae80a00
-    m_LastClickedInstanceID: 714890
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: fa400000
+    m_LastClickedInstanceID: 16634
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000de6b0000d26b00004c96ffffea6b0000f66b00004476ae00ae480000b44800008276d8007e76d800dc940f000a950f0010950f00
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -808,9 +808,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 242.8, y: 0.108, z: 127}
+    m_Target: {x: 1.8089294, y: -210.0943, z: 449.00665}
     speed: 2
-    m_Value: {x: 242.8, y: 0.108, z: 127}
+    m_Value: {x: 1.8089294, y: -210.0943, z: 449.00665}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -859,11 +859,11 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.38979644, y: 0.5160709, z: -0.2842124, w: 0.70779335}
     speed: 2
-    m_Value: {x: 0.38979644, y: 0.5160709, z: -0.2842124, w: 0.70779335}
+    m_Value: {x: 0.3897928, y: 0.5160661, z: -0.28420976, w: 0.7077868}
   m_Size:
-    m_Target: 10
+    m_Target: 341.76544
     speed: 2
-    m_Value: 10
+    m_Value: 327.04828
   m_Ortho:
     m_Target: 0
     speed: 2

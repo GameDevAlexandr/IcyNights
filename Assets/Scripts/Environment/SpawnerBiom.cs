@@ -14,7 +14,6 @@ public class SpawnerBiom : MonoBehaviour
         public int biomCount;
     }
 
-    [System.Serializable]
     public struct eData
     {
         public List<GameObject> environObjects;
