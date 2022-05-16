@@ -41,7 +41,7 @@ public class Inventory : MonoBehaviour
                 Destroy(ContctEnvironment.item.gameObject);
             }
         }
-        else
+        else if(type == Item.Type.interaction)
         {
             GeneralUi.ActivateInteractionPanel(true, ContctEnvironment.item);
         }

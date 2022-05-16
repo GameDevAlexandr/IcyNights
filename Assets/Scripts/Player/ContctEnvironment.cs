@@ -10,29 +10,21 @@ public class ContctEnvironment : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Item")
+        if (other.tag == "Item" && !MovmentPlayer.carryHeavy)
         {
             item = other.GetComponent<Item>();
             GeneralUi.hint.SetActive(true);
-
-            if (Player.CurrentParams.capacity + item.weight > Player.CurrentParams.maxCapacity)
+            if (item.type == Item.Type.picup)
             {
-                GeneralUi.hintText.text = "Слишком тяжело";
+                if (Player.CurrentParams.capacity + item.weight > Player.CurrentParams.maxCapacity)
+                {
+                    GeneralUi.hintText.text = "Слишком тяжело";
+                    return;
+                }
             }
-            else
-            {
-                IsItemPicked = true;
-                GeneralUi.hintText.text = item.nameItem;
-            }
-        }
-        if(other.tag == "Interection")
-        {
-            item = other.GetComponent<Item>();
-            GeneralUi.hint.SetActive(true);
-            GeneralUi.hintText.text = item.nameItem;
             IsItemPicked = true;
+            GeneralUi.hintText.text = item.nameItem;
         }
-            
     }
     private void OnTriggerExit(Collider other)
     {

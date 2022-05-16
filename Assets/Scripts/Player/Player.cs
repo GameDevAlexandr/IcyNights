@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
             ChangeParam();
             changeTimer = Time.time;
             RaycastHit _hit;
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 4);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 3);
             foreach(Collider collider in colliders)
             {
                 Item item;

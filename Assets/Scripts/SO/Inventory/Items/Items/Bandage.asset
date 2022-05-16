@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a73e8f7ad90b0c543bd2d820be9c562c, type: 3}
+  m_Name: Bandage
+  m_EditorClassIdentifier: 
+  ID: 1
+  visualComponent: {fileID: 21300000, guid: 41c071ed943729041b6c4d71a15e44ff, type: 3}
+  type: 0
+  description: 
+  weightPerOne: 0.2
+  canStack: 0
+  maxStackAmount: 0
+  restoreFood: 0
+  restoreWater: 0
+  restoreHealth: 15
+  restoreTemperature: 0
+  restoreStamina: 0
+  restoreSleep: 0

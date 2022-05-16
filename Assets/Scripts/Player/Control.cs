@@ -21,10 +21,10 @@ public class Control : MonoBehaviour
         directY = Input.GetAxisRaw("Vertical");
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (GeneralUi.characterPanel.activeSelf) 
+            if (GeneralUi.characterPanel.activeSelf)
             {
                 GeneralUi.characterPanel.SetActive(false);
-                
+
             }
             else
             {
@@ -33,7 +33,7 @@ public class Control : MonoBehaviour
             }
         }
         mp.PlayerMove(directX, directY, Input.GetKey(KeyCode.LeftShift));
-        if (Input.GetKey(KeyCode.E) && !ContctEnvironment.IsItemPicked)
+        if (Input.GetKey(KeyCode.E))
         {
             mp.cameraPosition.RotateAroundLocal(Vector3.up, 0.1f);
         }
@@ -41,11 +41,15 @@ public class Control : MonoBehaviour
         {
             mp.cameraPosition.RotateAroundLocal(Vector3.up, -0.1f);
         }
-        if (ContctEnvironment.IsItemPicked && Input.GetKeyDown(KeyCode.E))
+        if (ContctEnvironment.IsItemPicked && Input.GetKeyDown(KeyCode.F) && !MovmentPlayer.carryHeavy)
         {
             pickItemEvent.Invoke(ContctEnvironment.item.type);
         }
-        if (Input.GetKeyDown(KeyCode.F))
+        else if (Input.GetKeyDown(KeyCode.F) && MovmentPlayer.carryHeavy)
+        {
+            pickItemEvent.Invoke(ContctEnvironment.item.type);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
         {
             mp.isTaked = !mp.isTaked;
             mp.TakeWeapon();
@@ -54,6 +58,5 @@ public class Control : MonoBehaviour
         {
             mp.Attack();
         }
-
     }
 }

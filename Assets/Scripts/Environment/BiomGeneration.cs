@@ -22,7 +22,7 @@ public class BiomGeneration : MonoBehaviour
     public List<GameObject> envirObjects = new List<GameObject>();
     private void Awake()
     {
-      
+       
     }
 
     private void DropElement(int elementIndex)
@@ -41,8 +41,7 @@ public class BiomGeneration : MonoBehaviour
                 newObject.transform.localScale *= Random.Range(envirParams[elementIndex].scaleVariaton.x, 
                 envirParams[elementIndex].scaleVariaton.y);
                 envirObjects.Add(newObject);
-                //AddObjectToCell(newObject);
-               // newObject.SetActive(false);
+                //newObject.SetActive(false);
             }
         }      
     }
@@ -75,20 +74,5 @@ public class BiomGeneration : MonoBehaviour
             envirObjects.Clear();
         }
     }
-    private void AddObjectToCell(GameObject gObject)
-    {
-        Vector2 objectPosition = new Vector2(gObject.transform.position.x, gObject.transform.position.z);
-        Vector2[,] gridSurface = GameData.DataSingleton.gridOfSurface;
-        for (int i = 0; i < GameData.DataSingleton.cellSurfaceX-1; i++)
-        {
-            for (int j = 0; j < GameData.DataSingleton.cellSurfaceY-1; j++)
-            {
-                if (objectPosition.x > gridSurface[i, j].x && objectPosition.y > gridSurface[i, j].y &&
-                    objectPosition.x < gridSurface[i + 1, j + 1].x && objectPosition.y < gridSurface[i + 1, j + 1].y)
-                {
-                    GameData.DataSingleton.environData[i, j].environObjects.Add(gObject);
-                }                
-            }
-        }
-    }
+
 }

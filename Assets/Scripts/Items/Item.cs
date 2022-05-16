@@ -7,7 +7,7 @@ public class Item : MonoBehaviour
     
     public enum  Type
     {
-        picup, interaction
+        picup, interaction, heavy
     }
     public enum PlaceType
     {
@@ -43,7 +43,6 @@ public class Item : MonoBehaviour
     {
         if(outline = GetComponent<Outline>())
         {
-            outline.enabled = false;
             outlineColor = outline.OutlineColor;
         }
         
@@ -52,7 +51,6 @@ public class Item : MonoBehaviour
     {
         if (outline)
         {
-            outline.enabled = true;           
             onOutline = true;
             StartCoroutine(DisableOutline());
             
@@ -60,24 +58,27 @@ public class Item : MonoBehaviour
     }
     IEnumerator DisableOutline()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         onOutline = false;
     }
     private void FixedUpdate()
     {
-        if (onOutline)
+        if (outline)
         {
-            outlineColor.a = 0.7f;
-            outline.OutlineColor = outlineColor;
-        }
-        else
-        {
-            outlineColor.a -= 0.01f;
-            Mathf.Clamp(outlineColor.a, 0, 1);
-            outline.OutlineColor = outlineColor;
-            if (outlineColor.a == 0)
+            if (onOutline)
             {
-                outline.enabled = false;
+                outlineColor.a = 0.7f;
+                outline.OutlineColor = outlineColor;
+            }
+            else
+            {
+                outlineColor.a -= 0.01f;
+                //Mathf.Clamp(outlineColor.a, 0, 1);
+                if (outlineColor.a < 0)
+                {
+                    outlineColor.a = 0;
+                }
+                outline.OutlineColor = outlineColor;
             }
         }
     }

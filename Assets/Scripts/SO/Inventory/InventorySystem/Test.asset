@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a73e8f7ad90b0c543bd2d820be9c562c, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4281163809187591937, guid: 190b6661e1fd6d8478ce0ba4e6d8e7cd, type: 3}
+  type: 0
+  description: Pupa
+  restoreFood: 0
+  restoreWater: 0
+  restoreHealth: 0
+  restoreTemperature: 0
+  restoreStamina: 0
+  restoreSleep: 0

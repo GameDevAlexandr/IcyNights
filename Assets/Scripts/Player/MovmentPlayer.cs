@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class MovmentPlayer : MonoBehaviour
 {
     private Rigidbody _rb;
+    public static bool carryHeavy;
     public static UnityEvent ActivateEnvironEvent = new UnityEvent();
     private float timerEActivation;
     private Animator animator;
@@ -15,6 +16,7 @@ public class MovmentPlayer : MonoBehaviour
     public Transform cameraPosition;
     [HideInInspector] public bool isTaked;
     public GameObject activeWeapon;
+    [SerializeField] private Transform heavyItemPosition;
 
     private void Start()
     {
@@ -45,24 +47,27 @@ public class MovmentPlayer : MonoBehaviour
             directSpeed = Mathf.Abs(directionY);
         }
         float currentSpeed = Player.CurrentParams.speedMovment;
-        if (isRun)
+        if (isRun && !carryHeavy)
         {
             currentSpeed = Player.CurrentParams.speedMovment * 3;
         }
-        else
+        else if (!isRun && !carryHeavy)
         {
             currentSpeed = Player.CurrentParams.speedMovment;
+        }
+        else
+        {
+            currentSpeed = Player.CurrentParams.speedMovment * 0.5f;
         }
         animator.speed = Player.CurrentParams.speedMovment / 2;
         Vector3 velocityDirect = new Vector3(direction.x*currentSpeed, _rb.velocity.y, direction.z*currentSpeed);
         _rb.velocity = velocityDirect;
-        Debug.Log(directSpeed);
         if (!isRun)
         {
             animator.SetFloat("Speed", directSpeed * 0.5f);
             Player.CurrentParams.staminaRegeneration = 3;
         }
-        else
+        else if (!carryHeavy)
         {
             animator.SetFloat("Speed", directSpeed);
             Player.CurrentParams.staminaRegeneration = -5;
@@ -94,6 +99,21 @@ public class MovmentPlayer : MonoBehaviour
         {
             animator.SetTrigger("Pick");
         }
+        else if(type == Item.Type.heavy)
+        {
+            if (!carryHeavy)
+            {
+                animator.SetBool("HeavyCargo", true);
+                ContctEnvironment.item.transform.parent = heavyItemPosition;
+                ContctEnvironment.item.transform.position = heavyItemPosition.position;
+                carryHeavy = true;
+                GeneralUi.hintText.gameObject.SetActive(false);
+            }
+            else
+            {
+                dropHeavyItem();
+            }
+        }
     }
     public void TakeWeapon()
     {
@@ -113,5 +133,18 @@ public class MovmentPlayer : MonoBehaviour
         {
             animator.SetTrigger("Attack");
         }
+    }
+    private void dropHeavyItem()
+    {
+        Ray _ray = new Ray(ContctEnvironment.item.transform.position, Vector3.down);
+        RaycastHit _hit;
+        if (Physics.Raycast(_ray, out _hit, 3.0f, LayerMask.GetMask("Ground")))
+        {
+            ContctEnvironment.item.transform.position = _hit.point;
+            ContctEnvironment.item.transform.parent = transform.parent;
+            carryHeavy = false;
+            animator.SetBool("HeavyCargo", false);
+        }
+
     }
 }

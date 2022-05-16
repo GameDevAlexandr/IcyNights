@@ -7,6 +7,7 @@ public class EnvironmentActivation : MonoBehaviour
     private int xPositioToGrid;
     private int yPositioToGrid;
     private Vector2[,] gridSurface;
+    [SerializeField] private SpawnerBiom biom;
     void Start()
     {
         DefineRect();
@@ -24,11 +25,11 @@ public class EnvironmentActivation : MonoBehaviour
     }
     private void DefineRect()
     {
-        gridSurface = GameData.DataSingleton.gridOfSurface;
+        gridSurface = biom.gridOfSurface;
         Vector2 objectPosition = new Vector2(transform.position.x, transform.position.z);
-        for (int i = 0; i < GameData.DataSingleton.cellSurfaceX; i++)
+        for (int i = 0; i < biom.cellSurfaceX; i++)
         {
-            for (int j = 0; j < GameData.DataSingleton.cellSurfaceY; j++)
+            for (int j = 0; j < biom.cellSurfaceY; j++)
             {
                 if (objectPosition.x > gridSurface[i, j].x && objectPosition.y > gridSurface[i, j].y &&
                     objectPosition.x < gridSurface[i + 1, j + 1].x && objectPosition.y < gridSurface[i + 1, j + 1].y)
@@ -48,7 +49,7 @@ public class EnvironmentActivation : MonoBehaviour
     {
         int xDerect = 0;
         int yDerect = 0;
-        if(xPositioToGrid+1<= GameData.DataSingleton.cellSurfaceX && yPositioToGrid + 1 <= GameData.DataSingleton.cellSurfaceY && 
+        if(xPositioToGrid+1<= biom.cellSurfaceX && yPositioToGrid + 1 <= biom.cellSurfaceY && 
             transform.position.x > gridSurface[xPositioToGrid + 1, yPositioToGrid + 1].x)
         {
             xPositioToGrid++;
@@ -59,7 +60,7 @@ public class EnvironmentActivation : MonoBehaviour
             xPositioToGrid--;
             xDerect = -1;
         } 
-        else if(xPositioToGrid + 1 <= GameData.DataSingleton.cellSurfaceX && yPositioToGrid + 1 <= GameData.DataSingleton.cellSurfaceY &&
+        else if(xPositioToGrid + 1 <= biom.cellSurfaceX && yPositioToGrid + 1 <= biom.cellSurfaceY &&
             transform.position.z > gridSurface[xPositioToGrid + 1, yPositioToGrid + 1].y)
         {
             yPositioToGrid++;
@@ -85,9 +86,9 @@ public class EnvironmentActivation : MonoBehaviour
         {
             for (int k = -1; k < 2; k++)
             {
-                for (int i = 0; i < GameData.DataSingleton.environData[xPositioToGrid + j, yPositioToGrid + k].environObjects.Count; i++)
+                for (int i = 0; i < biom.environData[xPositioToGrid + j, yPositioToGrid + k].environObjects.Count; i++)
                 {
-                    GameData.DataSingleton.environData[xPositioToGrid + j, yPositioToGrid + k].environObjects[i].SetActive(true);
+                    biom.environData[xPositioToGrid + j, yPositioToGrid + k].environObjects[i].SetActive(true);
                 }
             }
         }
@@ -99,9 +100,9 @@ public class EnvironmentActivation : MonoBehaviour
                 int x = j * directY + 2 * -directX;
                 int y = j * directX + 2 * -directY;
                 Debug.Log(x+ "  " + y);
-                for (int i = 0; i < GameData.DataSingleton.environData[xPositioToGrid + x, yPositioToGrid + y].environObjects.Count; i++)
+                for (int i = 0; i < biom.environData[xPositioToGrid + x, yPositioToGrid + y].environObjects.Count; i++)
                 {
-                    GameData.DataSingleton.environData[xPositioToGrid + x, yPositioToGrid + y].environObjects[i].SetActive(false);
+                    biom.environData[xPositioToGrid + x, yPositioToGrid + y].environObjects[i].SetActive(false);
                 }
             }
         }
@@ -109,7 +110,7 @@ public class EnvironmentActivation : MonoBehaviour
     }
     private bool CheckNOEmpty(int x, int y)
     {
-        if(x<= GameData.DataSingleton.cellSurfaceX && y<= GameData.DataSingleton.cellSurfaceY) 
+        if(x<= biom.cellSurfaceX && y<= biom.cellSurfaceY) 
         {
             return true;
         }

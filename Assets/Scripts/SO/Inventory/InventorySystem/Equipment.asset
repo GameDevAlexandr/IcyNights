@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 998f3804510573c49a4419131ef1229b, type: 3}
+  m_Name: Equipment
+  m_EditorClassIdentifier: 
+  savePath: /inventory.Save
+  database: {fileID: 11400000, guid: 73b918f4812dab946af4630a080f18a6, type: 2}
+  Container:
+    Slots:
+    - Allowed: 06000000
+      item:
+        name: 
+        id: -1
+        canStack: 0
+        maxStackAmount: 0
+        weightPerOne: 0
+      amount: 0
+      weightPerOne: 0
+    - Allowed: 03000000
+      item:
+        name: 
+        id: -1
+        canStack: 0
+        maxStackAmount: 0
+        weightPerOne: 0
+      amount: 0
+      weightPerOne: 0
+    - Allowed: 03000000
+      item:
+        name: 
+        id: -1
+        canStack: 0
+        maxStackAmount: 0
+        weightPerOne: 0
+      amount: 0
+      weightPerOne: 0
+    - Allowed: 00000000
+      item:
+        name: 
+        id: -1
+        canStack: 0
+        maxStackAmount: 0
+        weightPerOne: 0
+      amount: 0
+      weightPerOne: 0
+    - Allowed: 00000000
+      item:
+        name: 
+        id: -1
+        canStack: 0
+        maxStackAmount: 0
+        weightPerOne: 0
+      amount: 0
+      weightPerOne: 0
+    - Allowed: 05000000
+      item:
+        name: 
+        id: -1
+        canStack: 0
+        maxStackAmount: 0
+        weightPerOne: 0
+      amount: 0
+      weightPerOne: 0
+  maxWeight: 0
+  currentWeight: 0
