@@ -18,6 +18,7 @@ public class GeneralUi : MonoBehaviour
     public static IntiractionPanel interPanel;
     public static Craft craftPanel;
     public static GameObject itemCell;
+    public static QuestJournal journal;
     //public static Button useInterButton;
 
     [SerializeField] private GameObject charPanel;
@@ -31,6 +32,7 @@ public class GeneralUi : MonoBehaviour
     [SerializeField] private Text capacityText;
     [SerializeField] private IntiractionPanel intiractionPanel;
     [SerializeField] private Craft _craftPanel;
+    [SerializeField] private QuestJournal questJournal;
     //private static List<InventoryCell> inventoryCells = new List<InventoryCell>();
     
  
@@ -48,6 +50,7 @@ public class GeneralUi : MonoBehaviour
         interPanel = intiractionPanel;
         craftPanel = _craftPanel;
         Player.changeParametrEvent.AddListener(SetIndicatorsValue);
+        journal = questJournal;
     }
     public static void PutItemToInventory(int index)
     {

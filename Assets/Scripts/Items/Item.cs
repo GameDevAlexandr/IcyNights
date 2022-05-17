@@ -7,7 +7,7 @@ public class Item : MonoBehaviour
     
     public enum  Type
     {
-        picup, interaction, heavy
+        picup, interaction, heavy, quest, noActive
     }
     public enum PlaceType
     {

@@ -15,7 +15,7 @@ public class Control : MonoBehaviour
     {
         mp = GetComponent<MovmentPlayer>();
     }
-    void FixedUpdate()
+    void Update()
     {
         directX = Input.GetAxisRaw("Horizontal");
         directY = Input.GetAxisRaw("Vertical");

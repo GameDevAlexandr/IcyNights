@@ -37,7 +37,10 @@ public class SpawnerBiom : MonoBehaviour
         {
             for (int j = 0; j < biomOjects[i].envirObjects.Count; j++)
             {
-               AddObjectToCell(biomOjects[i].envirObjects[j]);
+                if (biomOjects[i].envirObjects[j])
+                {
+                    AddObjectToCell(biomOjects[i].envirObjects[j]);
+                }
             }
         }
         //for (int i = 0; i < cellSurfaceX; i++)

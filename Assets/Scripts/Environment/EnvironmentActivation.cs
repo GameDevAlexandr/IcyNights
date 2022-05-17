@@ -88,7 +88,10 @@ public class EnvironmentActivation : MonoBehaviour
             {
                 for (int i = 0; i < biom.environData[xPositioToGrid + j, yPositioToGrid + k].environObjects.Count; i++)
                 {
-                    biom.environData[xPositioToGrid + j, yPositioToGrid + k].environObjects[i].SetActive(true);
+                    if (biom.environData[xPositioToGrid + j, yPositioToGrid + k].environObjects[i])
+                    {
+                        biom.environData[xPositioToGrid + j, yPositioToGrid + k].environObjects[i].SetActive(true);
+                    }
                 }
             }
         }
@@ -102,7 +105,10 @@ public class EnvironmentActivation : MonoBehaviour
                 Debug.Log(x+ "  " + y);
                 for (int i = 0; i < biom.environData[xPositioToGrid + x, yPositioToGrid + y].environObjects.Count; i++)
                 {
-                    biom.environData[xPositioToGrid + x, yPositioToGrid + y].environObjects[i].SetActive(false);
+                    if (biom.environData[xPositioToGrid + x, yPositioToGrid + y].environObjects[i])
+                    {
+                        biom.environData[xPositioToGrid + x, yPositioToGrid + y].environObjects[i].SetActive(false);
+                    }
                 }
             }
         }

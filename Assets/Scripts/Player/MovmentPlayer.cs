@@ -83,10 +83,8 @@ public class MovmentPlayer : MonoBehaviour
                 transitionValue = 1;
             }
             transform.rotation = Quaternion.Lerp(oldRotation, newRotation, transitionValue);
-            //Quaternion qu =  transform.rotation;
-            //qu.y += cameraPosition.rotation.y;
-            //transform.rotation = qu;
         }
+        
         if (Time.time - timerEActivation > 1)
         {
             ActivateEnvironEvent.Invoke();
@@ -113,6 +111,13 @@ public class MovmentPlayer : MonoBehaviour
             {
                 dropHeavyItem();
             }
+        }
+        else if(type == Item.Type.quest)
+        {
+            animator.SetTrigger("Inspection");
+            GeneralUi.journal.gameObject.SetActive(true);
+            GeneralUi.journal.AddQuest(ContctEnvironment.item.GetComponent<QuestItems>().questText);
+            ContctEnvironment.item.type = Item.Type.noActive;
         }
     }
     public void TakeWeapon()
